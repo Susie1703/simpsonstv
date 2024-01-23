@@ -6,8 +6,7 @@ newFiles = []
 oldFiles = []
 directory = os.path.dirname(os.path.realpath(__file__))
 #directory = list(Path(".").rglob("*.*"))
-# destinationDirectory = os.path.join(directory, 'encoded')
-destinationDirectory = "E:\Downloads\Torrents\encoded"
+destinationDirectory = "E:\Downloads\encoded"
 
 for root, dirnames, filenames in os.walk(directory):
     for filename in fnmatch.filter(filenames, '*.*'):
@@ -29,8 +28,6 @@ def isVideo(videofile):
 	if videofile.lower().endswith('.avi'):
 		return True
 	return False
-
-# newFiles = [os.path.join(dp, f) for dp, dn, filenames in os.walk(directory) for f in filenames if isVideo(f)]
 
 newFiles = [os.path.join(dp, f) for dp, dn, filenames in os.walk(directory) for filename in fnmatch.filter(filenames, '*.*') for f in filenames if isVideo(f)]
 
