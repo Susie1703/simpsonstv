@@ -1,8 +1,19 @@
 import os
+from pathlib import Path
+import fnmatch
 
 newFiles = []
+oldFiles = []
 directory = os.path.dirname(os.path.realpath(__file__))
-destinationDirectory = os.path.join(directory, 'encoded')
+#directory = list(Path(".").rglob("*.*"))
+# destinationDirectory = os.path.join(directory, 'encoded')
+destinationDirectory = "E:\Downloads\Torrents\encoded"
+
+for root, dirnames, filenames in os.walk(directory):
+    for filename in fnmatch.filter(filenames, '*.*'):
+        oldFiles.append(os.path.join(root, filename))
+
+print('list of files %s' % directory)
 
 if not os.path.exists(destinationDirectory):
 	os.mkdir(destinationDirectory)
@@ -19,7 +30,9 @@ def isVideo(videofile):
 		return True
 	return False
 
-newFiles = [os.path.join(dp, f) for dp, dn, filenames in os.walk(directory) for f in filenames if isVideo(f)]
+# newFiles = [os.path.join(dp, f) for dp, dn, filenames in os.walk(directory) for f in filenames if isVideo(f)]
+
+newFiles = [os.path.join(dp, f) for dp, dn, filenames in os.walk(directory) for filename in fnmatch.filter(filenames, '*.*') for f in filenames if isVideo(f)]
 
 for filepath in newFiles:
 	video = os.path.basename(filepath)
